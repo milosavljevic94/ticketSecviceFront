@@ -1,0 +1,18 @@
+<div fxFlex fxFlexAlign="center" class="autocomplete-container">
+  <mat-google-maps-autocomplete
+    (onAutocompleteSelected)="onAutocompleteSelected($event)"
+    (onLocationSelected)="onLocationSelected($event)"
+    (onChange)="onChange($event)"
+    #autocompleteInput
+  >
+  </mat-google-maps-autocomplete>
+</div>
+
+<mat-form-field class="example-full-width">
+  <input
+    matInput
+    placeholder="Enter location name"
+    [formControl]="formControl"
+    #locationName
+  />
+</mat-form-field>

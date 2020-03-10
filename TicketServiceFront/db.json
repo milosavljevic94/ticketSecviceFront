@@ -1,0 +1,11 @@
+{
+    "id": 2,
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImNyZWF0ZWQiOjE1Nzk1Mjc1NDI4MDgsImV4cCI6MTU3OTU0NTU0Mn0.sigXEw3dhCJhGcTS9iqqaZnsi_TQOetvpeFKfBDCYBuOjg7ELeMP7cH_r7_7Ul5YeQvDIzmS-DAby9FviOqk8Q",
+    "username": "testUser",
+    "email": "test@gmail.com",
+    "authorities": [
+        {
+            "authority": "USER"
+        }
+    ]
+}
