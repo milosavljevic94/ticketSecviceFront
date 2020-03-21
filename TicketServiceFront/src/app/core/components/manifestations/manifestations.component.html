@@ -1,0 +1,46 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<div class="container">
+    <br>
+    <h4>List of available manifestations: </h4>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select location
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item"(click)="refresh(0)">--None--</a>
+          <a class="dropdown-item" *ngFor="let loc of locations" (click)="refresh(loc.id)">{{loc.locationName}}</a>
+          
+        </div>
+      </div>
+	<br>
+	<div class="row" id="ads">
+    <!-- Category Card -->
+    <div class="col-md-4" *ngFor="let man of filteredManifestations">
+        <div class="card rounded">
+            <div class="card-image">
+                <span class="card-notify-year">
+                    <p>{{man.startTime}} - {{man.endTime}}</p>
+                </span>
+                <img class="img-fluid" src="https://imageonthefly.autodatadirect.com/images/?USER=eDealer&PW=edealer872&IMG=USC80HOC011A021001.jpg&width=440&height=262" alt="Alternate Text" />
+            </div>
+            <div class="card-image-overlay m-auto">
+                <span class="card-detail-badge">{{man.manifestationCategory}}</span>
+                <span class="card-detail-badge">$28,000.00</span>
+                
+            </div>
+            
+            <div class="card-body text-center">
+                <h5>{{man.name}}</h5>
+                <button><a [routerLink]="['/manifestation', man.id]">Click for more</a></button>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+</div>

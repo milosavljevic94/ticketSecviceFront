@@ -1,1 +1,118 @@
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/manifestations">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">T</span>
+          </i>
+          Manifestations
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/tickets">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">T</span>
+          </i>
+          Tickets
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/reservations">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">R</span>
+          </i>
+          Reservations
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin/address">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          AdressesAd
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin/locations">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          LocationsAd
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/reservations">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          ManifestationsAd
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/reservations">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          ReservationsAd
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin/roles">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          RolesAd
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/reservations">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          TicketsAd
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin/users">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">P</span>
+          </i>
+          UsersAd
+        </a>
+      </li>
+    </ul>
+
+
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logOut()">Log Out</a>
+      </li>
+    </ul>
+  
+  </div>
+</nav>
+
+
+
 <router-outlet></router-outlet>

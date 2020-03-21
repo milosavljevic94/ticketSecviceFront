@@ -1,0 +1,55 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="content_box">
+    <div class="left_bar">
+        <ul class=" nav-tabs--vertical nav" role="navigation">
+            <li class="nav-item" *ngFor="let reservation of userReservations">
+                <a href="#lorem" class="nav-link active" data-toggle="tab" role="tab" (click)="selectionChanged(reservation.id)" aria-controls="lorem">Reservation {{reservation.id}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="right_bar ">
+        <div class="tab-content ">
+            <div class="tab-pane fade show active" id="lorem" role="tabpanel">
+
+                <table class="table table-bordered">
+                        <tr>
+                            <th>Row</th>
+                            <td>{{selectedReservation.ticket.wantedSeat.row}}</td>
+                        </tr>
+                        <tr>
+                            <th>Seat</th>
+                            <td >{{selectedReservation.ticket.wantedSeat.seatNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>Purchase confirmed</th>
+                            <td>{{selectedReservation.ticket.purchaseConfirmed}}</td>
+                        </tr>
+                        <tr>
+                            <th>Purchase time</th>
+                            <td>{{convertDate(selectedReservation.ticket.purchaseTime)}}</td>
+                        </tr>
+                        <tr>
+                            <th>Exp days</th>
+                            <td>{{selectedReservation.expDays}}</td>
+                        </tr>
+                        <tr>
+                            <th>Manifestation</th>
+                            <td>{{manifestation.name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Day</th>
+                            <td>{{manifestationDay.name}}</td>
+                        </tr>
+                    
+                </table>
+                <button (click)="buyTicket()">Buy ticket</button>
+                <button (click)="cancelReservation()">Cancel reservation</button>
+            </div>
+            
+        </div>
+    </div>
+</div>

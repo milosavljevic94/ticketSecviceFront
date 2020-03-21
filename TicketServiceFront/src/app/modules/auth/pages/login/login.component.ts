@@ -54,11 +54,14 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.storageService.saveToken(data.token);
+          
           this.storageService.setLocalObject("currentUser", data);
-          this.router.navigate(["/"]);
+          this.router.navigate(["/manifestations"]);
+          alert("Login successful!");
           console.log(data);
         },
         error => {
+          alert("Login failed. Try again!");
           console.log(error);
         }
       );
