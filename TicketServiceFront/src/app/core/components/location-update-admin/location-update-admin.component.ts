@@ -84,6 +84,51 @@ export class LocationUpdateAdminComponent implements OnInit {
       });
   }
 
+  public updateLocation(){
+    let headers = new HttpHeaders();
+    let token = "Bearer ";
+    token += this.storageService.getToken();
+    headers = headers.set('Authorization', token);
+    
+    this.http.put('http://localhost:8080/api/location/updateLocation', this.location, { headers: headers }).subscribe((data) => {
+      alert("Location updated!");
+      this.loadLocation();
+    },
+      error => {
+        alert("Location updated!");
+        this.loadLocation();
+      });
+  }
+
+  public updateSector(idSector : number){
+    console.log(idSector);
+    console.log(this.location.sectors);
+    let headers = new HttpHeaders();
+    let token = "Bearer ";
+    token += this.storageService.getToken();
+    headers = headers.set('Authorization', token);
+
+    let sector = new Sector();
+    let i;
+
+    for(i = 0 ; i < this.location.sectors.length; i++) {
+      if(this.location.sectors[i].id === idSector) {
+        sector = this.location.sectors[i];
+      }
+    }
+
+    sector.seatsNumber = sector.rows*sector.columns;
+
+    this.http.put('http://localhost:8080/api/sector/updateSector', sector, { headers: headers }).subscribe((data) => {
+      alert("Sector updated!");
+      this.loadLocation();
+    },
+      error => {
+        alert("sector updated!");
+        this.loadLocation();
+      });
+  }
+
   public refresh(id : number) {
     var i;
     for(i = 0 ; i < this.addresses.length ; i++) {

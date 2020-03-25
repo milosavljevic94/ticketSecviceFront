@@ -13,6 +13,7 @@ import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/go
 import { AgmCoreModule } from "@agm/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { DatePipe } from '@angular/common'
 
 
 import { AppComponent } from "./app.component";
@@ -39,7 +40,7 @@ import { AppComponent } from "./app.component";
     BrowserAnimationsModule,
     AgmCoreModule.forRoot()
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

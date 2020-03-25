@@ -40,8 +40,12 @@ import { RolesAdminComponent } from './components/roles-admin/roles-admin.compon
 import { AddressUpdateModalComponent } from './components/address-update-modal/address-update-modal.component';
 import { LocationsAdminComponent } from './components/locations-admin/locations-admin.component';
 import { LocationUpdateAdminComponent } from './components/location-update-admin/location-update-admin.component';
+import { ReservationsAdminComponent } from './components/reservations-admin/reservations-admin.component';
+import { TicketsAdminComponent } from './components/tickets-admin/tickets-admin.component';
+import { ManifestationsAdminComponent } from './components/manifestations-admin/manifestations-admin.component';
+import { TicketReportsComponent } from './components/ticket-reports/ticket-reports.component';
 @NgModule({
-  declarations: [NavigationComponent, AddressComponent, ManifestationsComponent, ManifestationComponent, UserTicketsComponent, UserReservationsComponent, HomePageComponent, UsersAdminComponent, RolesAdminComponent, AddressUpdateModalComponent, LocationsAdminComponent, LocationUpdateAdminComponent],
+  declarations: [NavigationComponent, AddressComponent, ManifestationsComponent, ManifestationComponent, UserTicketsComponent, UserReservationsComponent, HomePageComponent, UsersAdminComponent, RolesAdminComponent, AddressUpdateModalComponent, LocationsAdminComponent, LocationUpdateAdminComponent, ReservationsAdminComponent, TicketsAdminComponent, ManifestationsAdminComponent, TicketReportsComponent],
   imports: [
     CommonModule,
     FormsModule,

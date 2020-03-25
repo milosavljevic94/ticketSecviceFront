@@ -1,0 +1,256 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 table-responsive">
+            <h4>List of Tickets: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Manifestation
+                        </th>
+                        <th class="text-center">
+                            Manifestation day
+                        </th>
+                        <th class="text-center">
+                            Location
+                        </th>
+                        <th class="text-center">
+                            Sector
+                        </th>
+                        <th class="text-center">
+                            Row
+                        </th>
+                        <th class="text-center">
+                            Number
+                        </th>
+                        <th class="text-center">
+                            Purchase Time
+                        </th>
+                        <th class="text-center">
+                            Purchase Confirmed
+                        </th>
+                        <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden" *ngFor="let ticket of tickets">
+                        <td data-name="name">
+                            <input type="text" disabled id="manifestation{{ticket.ticketId}}" name='name0'
+                                class="form-control" value="{{getManifestationName(ticket.dayId)}}" />
+                        </td>
+                        <td data-name="mail">
+                            <input type="text" disabled name='mail0' class="form-control"
+                                value="{{getManifestationDayName(ticket.dayId)}}" />
+                        </td>
+                        <td>
+                            <input type="text" disabled name='mail0' class="form-control"
+                                value="{{getLocationName(ticket.wantedSeat.manSectorId)}}" />
+                        </td>
+                        <td>
+                            <input type="text" disabled name='mail0' class="form-control"
+                                value="{{getSectorName(ticket.wantedSeat.manSectorId)}}" />
+                        </td>
+                        <td>
+                            <input type="number" [(ngModel)]="ticket.wantedSeat.row" name='mail0'
+                                class="form-control" />
+                        </td>
+                        <td>
+                            <input type="number" [(ngModel)]="ticket.wantedSeat.seatNumber" name='mail0'
+                                class="form-control" />
+                        </td>
+                        <td>
+                            <input type="text" disabled name='mail0' class="form-control"
+                                value="{{ticket.purchaseTime}}" />
+                        </td>
+                        <td>
+                            <input type="text" disabled name='mail0' class="form-control"
+                                value="{{ticket.purchaseConfirmed}}" />
+                        </td>
+                        <td data-name="del">
+                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span
+                                    aria-hidden="true" (click)="delete(ticket.ticketId)">Delete</span></button>
+                        </td>
+                        <td data-name="del">
+                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span
+                                    aria-hidden="true" (click)="update(ticket.ticketId)">Update</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr />
+            <h4>Create new ticket: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Manifestation
+                        </th>
+                        <th class="text-center">
+                            Manifestation day
+                        </th>
+                        <th class="text-center">
+                            Sector
+                        </th>
+                        <th class="text-center">
+                            Row
+                        </th>
+                        <th class="text-center">
+                            Number
+                        </th>
+                        <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden">
+
+                        <td data-name="mail">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{selectedManifestation.name}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngFor="let manifestation of manifestations"
+                                        (click)="refreshManifestation(manifestation.id)">{{manifestation.name}}</a>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td data-name="mail">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{selectedManifestationDay.name}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item"
+                                        *ngFor="let manifestationDay of selectedManifestation.manDaysDto"
+                                        (click)="refreshManifestationDay(manifestationDay.id)">{{manifestationDay.name}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-name="mail">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{selectedSector.sectorName}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngFor="let sector of selectedLocation.sectors"
+                                        (click)="refreshSector(sector.id)">{{sector.sectorName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-name="name">
+                            <input type="number" name='name0' class="form-control"
+                                [(ngModel)]="ticketCreate.wantedSeat.row" placeholder="Row" />
+                        </td>
+                        <td data-name="name">
+                            <input type="number" name='name0' class="form-control"
+                                [(ngModel)]="ticketCreate.wantedSeat.seatNumber" placeholder="Seat number" />
+                        </td>
+                        <td data-name="del">
+                            <a id="add_row" class="btn btn-primary float-right" (click)="create()">Add Row</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <h4>Ticket reports for locations: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Location name
+                        </th>
+                        <th class="text-center">
+                            Daily report
+                        </th>
+                        <th class="text-center">
+                            Montly report
+                        </th>
+                        <th class="text-center">
+                            Year report
+                        </th>
+                        <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden" *ngFor="let location of locations">
+                        <td>
+                            {{location.locationName}}
+                        </td>
+                        <td data-name="del">
+                            <a id="add_row" class="btn btn-primary float-right" [routerLink]="['/ticketReport/locationDay',location.id]">View</a>
+                        </td>
+                        <td data-name="del">
+                            <a id="add_row" class="btn btn-primary float-right" [routerLink]="['/ticketReport/locationMonth',location.id]">View</a>
+                        </td>
+                        <td data-name="del">
+                            <a id="add_row" class="btn btn-primary float-right" [routerLink]="['/ticketReport/locationYear',location.id]">View</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>Ticket reports for manifestations: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Manifestation
+                        </th>
+                        <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden" *ngFor="let manifestation of manifestations">
+                        <td>
+                            {{manifestation.name}}
+                        </td>
+                        <td data-name="del">
+                            <a id="add_row" class="btn btn-primary float-right" [routerLink]="['/ticketReport/manifestation',manifestation.id]">View</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <h4>Ticket reports for manifestations days: </h4>
+        <hr/>
+        <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Manifestation day
+                    </th>
+                    <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id='addr0' data-id="0" class="hidden" *ngFor="let manifestationDay of allManifestationDays">
+                    <td>
+                        {{manifestationDay.name}}
+                    </td>
+                    <td data-name="del">
+                        <a id="add_row" class="btn btn-primary float-right" [routerLink]="['/ticketReport/manifestationDay',manifestationDay.id]">View</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

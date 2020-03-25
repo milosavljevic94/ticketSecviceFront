@@ -60,7 +60,7 @@ export class LocationsAdminComponent implements OnInit {
       });
   }
 
-  public create(id: number) {
+  public create() {
 
     let headers = new HttpHeaders();
     let token = "Bearer ";

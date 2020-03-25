@@ -13,6 +13,10 @@ import {UsersAdminComponent} from "./core/components/users-admin/users-admin.com
 import {RolesAdminComponent} from "./core/components/roles-admin/roles-admin.component";
 import {LocationsAdminComponent} from "./core/components/locations-admin/locations-admin.component";
 import {LocationUpdateAdminComponent} from "./core/components/location-update-admin/location-update-admin.component";
+import {ReservationsAdminComponent} from "./core/components/reservations-admin/reservations-admin.component";
+import {TicketsAdminComponent} from "./core/components/tickets-admin/tickets-admin.component";
+import {ManifestationsAdminComponent} from "./core/components/manifestations-admin/manifestations-admin.component";
+import {TicketReportsComponent} from "./core/components/ticket-reports/ticket-reports.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -20,11 +24,15 @@ const routes: Routes = [
   { path: "admin/roles", component: RolesAdminComponent },
   { path: "admin/users", component: UsersAdminComponent },
   { path: "admin/locations", component: LocationsAdminComponent },
+  { path: "admin/tickets", component: TicketsAdminComponent },
+  { path: "admin/manifestations", component: ManifestationsAdminComponent },
   { path: "register", component: RegisterComponent },
   { path: "admin/update/location/:id", component: LocationUpdateAdminComponent},
+  { path: "admin/reservations", component: ReservationsAdminComponent},
   { path: "manifestations", component: ManifestationsComponent },
   { path: "manifestation/:id", component: ManifestationComponent },
   { path: "tickets", component: UserTicketsComponent },
+  { path: "ticketReport/:type/:id", component: TicketReportsComponent },
   { path: "reservations", component: UserReservationsComponent },
   {
     path: "admin",

@@ -25,7 +25,7 @@
 				<tbody>
     				<tr id='addr0' data-id="0" class="hidden">
 						<td data-name="name">
-						    <input type="text" disabled id="name{{location.id}}" name='name0' class="form-control" value="{{location.locationName}}"/>
+						    <input type="text" id="name{{location.id}}" name='name0' class="form-control" value="{{location.locationName}}"/>
 						</td>
 						<td data-name="mail">
 						    <div class="dropdown">
@@ -34,10 +34,13 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <a class="dropdown-item" *ngFor="let address of addresses" (click)="refresh(address.id)">{{address.street}}</a>
-                                  
                                 </div>
                               </div>
 						</td>
+						<td data-name="del">
+                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="updateLocation()">Update</span></button>
+                        </td>
+
 					</tr>
 				</tbody>
 			</table>
@@ -64,20 +67,20 @@
 				<tbody>
     				<tr id='addr0' data-id="0" class="hidden" *ngFor="let sector of location.sectors">
 						<td data-name="name">
-						    <input type="text" disabled id="name{{sector.id}}" name='name0' class="form-control" value="{{sector.sectorName}}"/>
+						    <input type="text" [(ngModel)]="sector.sectorName" id="name{{sector.id}}" name='name0' class="form-control"/>
 						</td>
 						<td data-name="mail">
-						    <input type="text" disabled id="row{{sector.id}}" name='mail0' class="form-control"  value="{{sector.rows}}"/>
+						    <input type="text"  id="row{{sector.id}}" [(ngModel)]="sector.rows" name='mail0' class="form-control"  />
                         </td>
                         <td data-name="mail">
-						    <input type="text" disabled id="columns{{sector.id}}" name='mail0' class="form-control"  value="{{sector.columns}}"/>
+						    <input type="text"  id="columns{{sector.id}}" [(ngModel)]="sector.columns" name='mail0' class="form-control"  />
 						</td>
                         
                         <td data-name="del">
                             <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="delete(sector.id)">Delete</span></button>
                         </td>
                         <td data-name="del">
-                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="update(sector.id)">Update</span></button>
+                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="updateSector(sector.id)">Update</span></button>
                         </td>
 					</tr>
 				</tbody>

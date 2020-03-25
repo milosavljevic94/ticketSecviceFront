@@ -6,15 +6,14 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" routerLink="/">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      
-      <li class="nav-item">
+      <li class="nav-item" id="manifestationsUser">
         <a class="nav-link" routerLink="/manifestations">
           <i class="fa fa-envelope-o">
             <span class="badge badge-danger">T</span>
@@ -23,7 +22,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/tickets">
+        <a class="nav-link" id="ticketsUser" routerLink="/tickets">
           <i class="fa fa-envelope-o">
             <span class="badge badge-danger">T</span>
           </i>
@@ -31,67 +30,67 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/reservations">
+        <a class="nav-link" id="reservationsUser" routerLink="/reservations">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-warning">R</span>
+            <span class="badge badge-danger">T</span>
           </i>
           Reservations
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/address">
+        <a class="nav-link" id="addressAdmin" routerLink="/admin/address">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          AdressesAd
+          Adresses
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/locations">
+        <a class="nav-link" id="locationsAdmin" routerLink="/admin/locations">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          LocationsAd
+          Locations
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/reservations">
+        <a class="nav-link" id="manifestationsAdmin" routerLink="/admin/manifestations">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          ManifestationsAd
+          Manifestations
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/reservations">
+        <a class="nav-link" id="reservationsAdmin" routerLink="/admin/reservations">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          ReservationsAd
+          Reservations
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/roles">
+        <a class="nav-link" id="rolesAdmin" routerLink="/admin/roles">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          RolesAd
+          Roles
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/reservations">
+        <a class="nav-link" id="ticketsAdmin" routerLink="/admin/tickets">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          TicketsAd
+          Tickets
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/users">
+        <a class="nav-link" id="usersAdmin" routerLink="/admin/users">
           <i class="fa fa-envelope-o">
             <span class="badge badge-warning">P</span>
           </i>
-          UsersAd
+          Users
         </a>
       </li>
     </ul>
@@ -100,13 +99,13 @@
 
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" routerLink="/login">Login</a>
+        <a class="nav-link" id="login" routerLink="/login">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/register">Register</a>
+        <a class="nav-link" id="register" routerLink="/register">Register</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="logOut()">Log Out</a>
+        <a class="nav-link" id="logout" (click)="logOut()">Log Out</a>
       </li>
     </ul>
   
