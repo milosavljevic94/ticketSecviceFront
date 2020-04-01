@@ -9,6 +9,8 @@ import { LocationDTO } from '../../model/LocationDTO';
 import { ManifestationDays } from '../../model/ManifestationDays';
 import { Sector } from '../../model/Sector';
 import { Ticket } from '../../model/Ticket';
+import { DatePipe } from '@angular/common';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-tickets-admin',
@@ -26,24 +28,23 @@ export class TicketsAdminComponent implements OnInit {
   selectedManifestation: Manifestation = new Manifestation();
   selectedManifestationDay: ManifestationDays = new ManifestationDays();
   selectedLocation: LocationDTO = new LocationDTO();
+
   selectedSector: Sector = new Sector();
 
   allManifestationDays: ManifestationDays[] = [];
 
-  constructor(private http: HttpClient, private storageService: StorageService, private route: ActivatedRoute) { }
+  chosenDate: Date = new Date();
+
+  constructor(private http: HttpClient, private storageService: StorageService, private route: ActivatedRoute, private datePipe: DatePipe, private authService: AuthService) { }
 
   ngOnInit() {
     this.loadTickets();
     this.loadManifestations();
     this.loadLocations();
-
   }
 
   public loadTickets() {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.get<BuyTicketDTO[]>('http://localhost:8080/api/ticket/allTicket', { headers: headers }).subscribe((data) => {
       this.tickets = data;
@@ -52,13 +53,11 @@ export class TicketsAdminComponent implements OnInit {
   }
 
   public loadManifestations() {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.get<Manifestation[]>('http://localhost:8080/api/manifestation/allManifestations', { headers: headers }).subscribe((data) => {
       this.manifestations = data;
+      console.log(this.manifestations);
       var i;
       let j;
       for(i=0;i<this.manifestations.length;i++){
@@ -71,10 +70,7 @@ export class TicketsAdminComponent implements OnInit {
   }
 
   public loadLocations() {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation', { headers: headers }).subscribe((data) => {
       this.locations = data;
@@ -88,7 +84,6 @@ export class TicketsAdminComponent implements OnInit {
     for (i = 0; i < this.manifestations.length; i++) {
       for (j = 0; j < this.manifestations[i].manDaysDto.length; j++) {
         if (this.manifestations[i].manDaysDto[j].id == idManifestationDay) {
-
           return this.manifestations[i].manDaysDto[j].name;
         }
       }
@@ -186,10 +181,11 @@ export class TicketsAdminComponent implements OnInit {
 
     console.log(this.ticketCreate);
 
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    if(!this.validateTicket(this.ticketCreate)){
+      return;
+    }
+
+    let headers = this.authService.getHeaders();
 
     this.http.post<Ticket>('http://localhost:8080/api/ticket/buyTicket', this.ticketCreate, { headers: headers }).subscribe((data) => {
       this.loadTickets();
@@ -204,31 +200,16 @@ export class TicketsAdminComponent implements OnInit {
   }
 
   public delete(id: number) {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.delete('http://localhost:8080/api/ticket/' + id, { headers: headers }).subscribe((data) => {
-      alert("Ticket deleted!");
       this.loadTickets();
       this.loadManifestations();
       this.loadLocations();
-    },
-      error => {
-        alert("Ticket deleted!");
-        this.loadTickets();
-        this.loadManifestations();
-        this.loadLocations();
-      });
+    });
   }
 
   public update(id: number) {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
-
     let ticket = new Ticket();
     let i;
 
@@ -240,20 +221,36 @@ export class TicketsAdminComponent implements OnInit {
       }
     }
 
+    if(!this.validateTicketUpdate(ticket)){
+      return;
+    }
+
+    let headers = this.authService.getHeaders();
+
     this.http.put('http://localhost:8080/api/ticket/updateTicket', ticket, { headers: headers }).subscribe((data) => {
       alert("Ticket updated!");
       this.loadTickets();
       this.loadManifestations();
       this.loadLocations();
-    },
-      error => {
-        alert("tector updated!");
-        this.loadTickets();
-        this.loadManifestations();
-        this.loadLocations();
-      });
+    });
   }
 
+  public validateTicket(ticket: BuyTicketDTO) {
+    if(ticket.dayId == undefined || ticket.wantedSeat.manSectorId == undefined || ticket.wantedSeat.row == null || ticket.wantedSeat.seatNumber == null) {
+      alert("Please fill in all fileds!");
+      return false;
+    }
 
+    return true;
+  }
+
+  public validateTicketUpdate(ticket: Ticket) {
+    if(ticket.rowNum == null || ticket.seatNum == null) {
+      alert("Please fill in all fileds!");
+      return false;
+    }
+
+    return true;
+  }
 
 }

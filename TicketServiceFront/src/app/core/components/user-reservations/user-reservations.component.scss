@@ -6,7 +6,7 @@
 .left_bar{
     float:left;
     width:15%;
-    background:#eaf4ff;
+    background:gray;
     height:100vh;
 }
 
@@ -30,8 +30,8 @@
     float:left;
     width:100%;
     padding: 15px;
-    border-bottom:1px solid #adcff7;
-    color:#1276F0;
+    border-bottom:1px solid white;
+    color:white;
 }
 
 .nav-tabs--vertical li a.active::after {
@@ -49,4 +49,10 @@
     border-top: 0;
     transform: rotate(270deg);
     z-index:999;
+}
+
+h3 {
+    padding-left: 120px;
+    margin-left: 120px;
+    margin-top: 10px;
 }

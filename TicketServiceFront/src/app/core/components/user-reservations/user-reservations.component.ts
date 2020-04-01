@@ -6,6 +6,8 @@ import { StorageService } from '../../services/storage/storage.service';
 import { Manifestation } from '../../model/Manifestation';
 import { ManifestationDayDto } from '../../model/ManifestationDayDto';
 import { BuyTicketDTO } from '../../model/BuyTicketDTO';
+import { DatePipe } from '@angular/common';
+import { LocationDTO } from '../../model/LocationDTO';
 
 @Component({
   selector: 'app-user-reservations',
@@ -17,12 +19,13 @@ export class UserReservationsComponent implements OnInit {
   userReservations: Reservation[] = [];
   selectedReservation: Reservation = new Reservation();
 
-
   ticket: BuyTicketDTO = new BuyTicketDTO();
   manifestation: Manifestation = new Manifestation();
   manifestationDay: ManifestationDayDto = new ManifestationDayDto();
 
-  constructor(private http: HttpClient, private storageService: StorageService) { }
+  locations: LocationDTO[] = [];
+
+  constructor(private http: HttpClient, private storageService: StorageService, private datePipe: DatePipe) { }
 
   ngOnInit() {
 
@@ -44,6 +47,10 @@ export class UserReservationsComponent implements OnInit {
         this.http.get<ManifestationDayDto>('http://localhost:8080/api/manifestation/manifestationDay/' + this.selectedReservation.ticket.dayId, { headers: headers }).subscribe((data) => {
           this.manifestationDay = data;
           this.manifestation = data.manifestation;
+          this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation').subscribe((data) => {
+            this.locations = data;
+            console.log(this.selectedReservation);
+          });
         });
       }
     }
@@ -93,29 +100,23 @@ export class UserReservationsComponent implements OnInit {
       this.http.get<ManifestationDayDto>('http://localhost:8080/api/manifestation/manifestationDay/' + this.selectedReservation.ticket.dayId, { headers: headers }).subscribe((data) => {
         this.manifestationDay = data;
         this.manifestation = data.manifestation;
+        this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation').subscribe((data) => {
+            this.locations = data;
+            console.log(this.selectedReservation);
+          });
       });
     });
   }
 
-  public convertDate(input): string {
-    if (input == null) {
-      return "";
+  public getSectorName(sectorId: number) {
+    let i, j;
+    for (i = 0; i < this.locations.length; i++) {
+      for (j = 0; j < this.locations[i].sectors.length; j++) {
+        if (this.locations[i].sectors[j].id == sectorId) {
+          return this.locations[i].sectors[j].sectorName;
+        }
+      }
     }
-
-    let dateParts: string[];
-    let dateString = input.toString();
-    dateParts = dateString.split('T');
-
-    let dateComponents: string[];
-    dateComponents = dateParts[0].split('-');
-
-    let day = dateComponents[2];
-    let month = dateComponents[1];
-    let year = dateComponents[0];
-
-    let retVal = "";
-    retVal = retVal + day + "/" + month + "/" + year;
-    return retVal;
   }
 
 }

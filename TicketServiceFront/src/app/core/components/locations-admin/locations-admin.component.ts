@@ -4,6 +4,7 @@ import { Address } from '../../model/Address';
 import { StorageService } from '../../services/storage/storage.service';
 import { LocationDTO } from '../../model/LocationDTO';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-locations-admin',
@@ -15,67 +16,52 @@ export class LocationsAdminComponent implements OnInit {
   locations: LocationDTO[] = [];
   addresses: Address[] = [];
   locationCreate: LocationDTO = new LocationDTO();
-  addressCreate: Address = new Address();
+  selectedAddress: Address = new Address();
   id: number;
   private sub: any;
 
-  constructor(private http: HttpClient, private storageService: StorageService,private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private storageService: StorageService,private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
     this.loadLocations();
   }
 
   public loadLocations() {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation', { headers: headers }).subscribe((data) => {
       this.locations = data;
-      console.log(data);
       this.http.get<Address[]>('http://localhost:8080/api/address/allAddress', { headers: headers }).subscribe((data) => {
         this.addresses = data;
-        console.log(data);
-
+        this.selectedAddress = this.addresses[0];
       });
     });
   }
 
   public delete(id: number) {
-    console.log(id);
-
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.delete('http://localhost:8080/api/location/' + id, { headers: headers }).subscribe((data) => {
-      alert("Location deleted!");
       this.loadLocations();
-    },
-      error => {
-        alert("Location deleted!");
-        this.loadLocations();
-      });
+    });
   }
 
   public create() {
 
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
-    this.locationCreate.address = this.addressCreate;
-
+    let headers = this.authService.getHeaders();
     
+    this.locationCreate.address = this.selectedAddress;
+    
+    if(!this.validation(this.locationCreate)){
+      this.loadLocations();
+      return;
+    }
+
     this.http.post('http://localhost:8080/api/location/addLocation', this.locationCreate, { headers: headers }).subscribe((data) => {
-      alert("Location created!");
       this.locationCreate = new LocationDTO();
       this.loadLocations();
     },
       error => {
-        alert("Location created!");
         this.locationCreate = new LocationDTO();
         this.loadLocations();
       });
@@ -85,9 +71,17 @@ export class LocationsAdminComponent implements OnInit {
     var i;
     for(i = 0 ; i < this.addresses.length ; i++) {
       if(this.addresses[i].id == id) {
-        this.addressCreate = this.addresses[i];
+        this.selectedAddress = this.addresses[i];
       }
     }    
   }
 
+  public validation(location: LocationDTO) {
+    if(location.locationName === "" || this.selectedAddress.state === "") {
+      alert("Please fill in all fields!");
+      return false;
+    }
+
+    return true;
+  }
 }

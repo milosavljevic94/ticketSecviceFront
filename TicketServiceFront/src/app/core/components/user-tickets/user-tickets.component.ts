@@ -6,9 +6,10 @@ import { BuyTicketDTO } from '../../model/BuyTicketDTO';
 import { Manifestation } from '../../model/Manifestation';
 import { ManifestationDays } from '../../model/ManifestationDays';
 import { ManifestationSectorPriceDto } from '../../model/ManifestationSectorPriceDto';
-
+import { DatePipe } from '@angular/common';
 import { from } from 'rxjs';
 import { ManifestationDayDto } from '../../model/ManifestationDayDto';
+import { LocationDTO } from '../../model/LocationDTO';
 @Component({
   selector: 'app-user-tickets',
   templateUrl: './user-tickets.component.html',
@@ -22,7 +23,10 @@ export class UserTicketsComponent implements OnInit {
   manifestation: Manifestation = new Manifestation();
   manifestationDay: ManifestationDayDto = new ManifestationDayDto();
 
-  constructor(private http: HttpClient, private storageService: StorageService) { }
+  locations: LocationDTO[] = [];
+
+
+  constructor(private http: HttpClient, private storageService: StorageService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.initializeTickets();
@@ -57,32 +61,24 @@ export class UserTicketsComponent implements OnInit {
       this.http.get<ManifestationDayDto>('http://localhost:8080/api/manifestation/manifestationDay/' + this.selectedTicket.dayId, { headers: headers }).subscribe((data) => {
         this.manifestationDay = data;
         this.manifestation = data.manifestation;
+        this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation').subscribe((data) => {
+          this.locations = data;
+        });
       });
     });
   }
 
 
 
-
-  public convertDate(input): string {
-    if (input == null) {
-      return "";
+  public getSectorName(sectorId: number) {
+    let i,j;
+    for(i = 0 ; i < this.locations.length ; i++) {
+      for(j = 0 ; j < this.locations[i].sectors.length ; j++){
+        if(this.locations[i].sectors[j].id == sectorId) {
+          return this.locations[i].sectors[j].sectorName;
+        }
+      }
     }
-
-    let dateParts: string[];
-    let dateString = input.toString();
-    dateParts = dateString.split('T');
-
-    let dateComponents: string[];
-    dateComponents = dateParts[0].split('-');
-
-    let day = dateComponents[2];
-    let month = dateComponents[1];
-    let year = dateComponents[0];
-
-    let retVal = "";
-    retVal = retVal + day + "/" + month + "/" + year;
-    return retVal;
   }
 
 

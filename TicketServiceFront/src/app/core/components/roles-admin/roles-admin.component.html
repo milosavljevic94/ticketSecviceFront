@@ -13,7 +13,7 @@
 				<thead>
 					<tr >
 						<th class="text-center">
-							Name:
+							Name
 						</th>
 					</tr>
 				</thead>
@@ -22,13 +22,12 @@
 						<td data-name="name">
 						    <input type="text" id="id{{role.id}}" name='name0'  value="{{role.roleName}}" class="form-control"/>
 						</td>
-                        <td data-name="del">
+						<td data-name="del">
+                            <button name="del0" class='btn btn-warning glyphicon glyphicon-remove row-remove' style="color: white;" (click)="update(role.id)"><span aria-hidden="true">Update</span></button>
+                        </td>
+						<td data-name="del">
                             <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove' (click)="delete(role.id)"><span aria-hidden="true">Delete</span></button>
                         </td>
-                        <td data-name="del">
-                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove' (click)="update(role.id)"><span aria-hidden="true">Update</span></button>
-                        </td>
-                        
                     </tr>
 				</tbody>
 			</table>
@@ -37,7 +36,7 @@
 				<thead>
 					<tr >
 						<th class="text-center">
-							Name:
+							Name
 						</th>
 					</tr>
 				</thead>
@@ -47,7 +46,7 @@
 						    <input type="text" name='name0'  placeholder="Name" [(ngModel)]="roleCreate.roleName" class="form-control"/>
 						</td>
                         <td data-name="del">
-							<a id="add_row" class="btn btn-primary float-right" (click)="create()">Add Row</a>
+							<a id="add_row" class="btn btn-success float-right" style="color: white;" (click)="create()">Create</a>
                         </td>
                         
                     </tr>

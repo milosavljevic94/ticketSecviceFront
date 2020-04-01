@@ -1,1 +1,182 @@
-<p>manifestations-admin works!</p>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 table-responsive">
+            <h4>List of Manifestations: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Name
+                        </th>
+                        <th class="text-center">
+                            Description
+                        </th>
+                        <th class="text-center">
+                            Start time
+                        </th>
+                        <th class="text-center">
+                            End time
+                        </th>
+                        <th class="text-center">
+                            Category
+                        </th>
+                        <th class="text-center">
+                            Location
+                        </th>
+                        <th class="text-center">
+                            Manifestation Days
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden" *ngFor="let manifestation of manifestations">
+                        <td>
+                            <input type="text" name='mail0' class="form-control" [(ngModel)]="manifestation.name" />
+                        </td>
+                        <td>
+                            <input type="text" name='mail0' class="form-control"
+                                [(ngModel)]="manifestation.description" />
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="picker" [(ngModel)]="manifestation.startTime">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="secondPicker" [(ngModel)]="manifestation.endTime">
+                                <mat-datepicker-toggle matSuffix [for]="secondPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #secondPicker></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{manifestation.manifestationCategory}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngFor="let category of categories"
+                                        (click)="refreshCategoryUpdate(manifestation.id,category)">{{category}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" disabledereee name='mail0' class="form-control"
+                                [value]="getLocationName(manifestation.locationId)" />
+
+                        </td>
+                        <td>
+                            <button name="del0" class='btn btn-primary glyphicon glyphicon-remove row-remove'><span
+                                aria-hidden="true" [routerLink]="['/admin/manifestations/'+ manifestation.id+'/sectors']">View</span></button>
+
+                        </td>
+                        <td data-name="del">
+                            <button name="del0" class='btn btn-warning glyphicon glyphicon-remove row-remove'><span
+                                    aria-hidden="true" style="color: white;" (click)="update(manifestation.id)">Update</span></button>
+                        </td>
+                        <td data-name="del">
+                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span
+                                    aria-hidden="true" (click)="delete(manifestation.id)">Delete</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr />
+            <h4>Create new manifestation: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Name
+                        </th>
+                        <th class="text-center">
+                            Description
+                        </th>
+                        <th class="text-center">
+                            Start time
+                        </th>
+                        <th class="text-center">
+                            End time
+                        </th>
+                        <th class="text-center">
+                            Category
+                        </th>
+                        <th class="text-center">
+                            Location
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden">
+                        <td>
+                            <input type="string" name='name0' class="form-control"
+                                [(ngModel)]="manifestationCreate.name" placeholder="Name" />
+                        </td>
+                        <td>
+                            <input type="string" name='name0' class="form-control"
+                                [(ngModel)]="manifestationCreate.description" placeholder="Description" />
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="startPicker" [(ngModel)]="startTime">
+                                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #startPicker></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="endPicker" [(ngModel)]="endTime">
+                                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #endPicker></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{selectedCategory}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngFor="let category of categories"
+                                        (click)="refreshCategory(category)">{{category}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{selectedLocation.locationName}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngFor="let location of locations"
+                                        (click)="refreshLocation(location.id)">{{location.locationName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-name="del">
+                            <a id="add_row" class="btn btn-success float-right" style="color: white;" (click)="create()">Create</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

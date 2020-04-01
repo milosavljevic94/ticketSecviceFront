@@ -4,124 +4,160 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container emp-profile">
-    <form method="post">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                        alt="" />
-                    <div class="file btn btn-lg btn-primary">
-                        Change Photo
-                        <input type="file" name="file" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="profile-head">
-                    <h5>
-                        {{manifestation.name}}
-                    </h5>
-                    <h6>
-                        {{manifestation.startTime}} - {{manifestation.endTime}}
-                    </h6>
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                aria-controls="home" aria-selected="true">Cene po sektorima</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                aria-controls="profile" aria-selected="false">Manifestation days</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work">
-                    <p>CATEGORY:</p>
-                    <a href="">{{manifestation.manifestationCategory}}</a><br />
-                    <p>DESCRIPTION</p>
-                    <a href="">{{manifestation.description}}</a><br />
-                    <p>Location</p>
-                    <a href="">{{location.locationName}} ({{address.street}} {{address.number}})</a><br />
-                    <a href="">{{address.city}}, {{address.state}}</a><br />
-                    <a href=""></a><br />
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row" *ngFor="let day of manifestation.manDaysDto">
-                            <div class="col-md-4">
-                                <label>{{day.name}}</label>
-                            </div>
-                            <div class="row" *ngFor="let sector of day.sectorPricesDtos">
-                                <div class="col-md-4">
-                                    <label>{{sector.sectorId}}</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>{{sector.price}}</label>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="row" *ngFor="let day of manifestation.manDaysDto">
-                            <div class="col-md-6">
-                                <label>{{day.name}} ( {{day.startTime}} )</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>{{day.description}}</p>
-                            </div>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="assets/resources/manifestation.jpg" alt="Can't load picture" />
+                <div class="file btn btn-lg btn-primary">
+                    {{manifestation.name}}
+                    <input type="file" name="file" />
                 </div>
             </div>
         </div>
-        <h4>Choose manifestation day: </h4>
-        <div class="form-check" *ngFor="let day of manifestation.manDaysDto">
-            <input class="form-check-input" type="radio" name="exampleRadios" [(ngModel)]="myRadio" id="exampleRadios1" [value]="day.id"
-                checked>
-            <label class="form-check-label" for="exampleRadios1">
-                {{day.name}}
-            </label>
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5>
+                    {{manifestation.name}}
+                </h5>
+                <h6>
+                    Duration: {{manifestation.startTime | date: 'dd/MM/yyyy'}} -
+                    {{manifestation.endTime | date: 'dd/MM/yyyy'}}
+                </h6>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">Prices for sectors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                            aria-controls="profile" aria-selected="false">Manifestation days</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-work">
+                <p>CATEGORY:</p>
+                <p class="descriptionManifestation">
+                    {{manifestation.manifestationCategory}}
+                </p>
+                <p>DESCRIPTION</p>
+                <p class="descriptionManifestation">
+                    {{manifestation.description}}
+                </p>
+                <p>LOCATION</p>
+                <p class="descriptionManifestation">
+                    {{location.locationName}}
+                    <br />
+                    ({{address.street}} {{address.number}})
+                    <br />
+                    {{address.city}}, {{address.state}}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h4>Prices: </h4>
+                    <div *ngFor="let manifestationDay of manifestation.manDaysDto">
 
-        <form class="form-inline">
+                        <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        Manifestation day name
+                                    </th>
+                                    <th class="text-center">
+                                        Sector name
+                                    </th>
+                                    <th class="text-center">
+                                        Price
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id='addr0' data-id="0" class="hidden" *ngFor="let sector of location.sectors">
+                                    <td data-name="name">
+                                        <input type="text" disabled name='name0' class="form-control"
+                                            [value]="manifestationDay.name" />
+                                    </td>
+                                    <td data-name="mail">
+                                        <input type="text" disabled name='mail0' class="form-control"
+                                            [value]="sector.sectorName" />
+                                    </td>
+                                    <td data-name="desc">
+                                        <input type="text" disabled name="desc0" class="form-control"
+                                            [value]="getPrice(manifestationDay.id,sector.id)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-            <p>Choose sector:
-                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" [(ngModel)]="selectedSector" name="sectorSelect">
-                    <option [ngValue]="sector" *ngFor="let sector of location.sectors">{{sector.sectorName}}</option>
-                </select>
-            </p>
-            <p>Choose row:
-                <input type="string" name="row" min="1" [max]="location.sectors[0]" [(ngModel)]="my_row"/>
-            </p>
-            <p>Choose column:
-                <input type="string" name="column" min="1" [(ngModel)]="my_column"/>
-            </p>
-            <p>
-                <button type="submit" class="btn btn-primary my-1" (click)="reserveTicket()">Reserve ticket</button>
-            </p>
-            <div class="vl"></div>
-            <p>
-                <button type="submit" class="btn btn-primary my-1" (click)="buyTicket()">Buy ticket</button>
-            </p>
+                    </div>
 
 
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h4>Manifestation days: </h4>
+                    <hr />
+                    <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    Manifestation day name
+                                </th>
+                                <th class="text-center">
+                                    Start time
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id='addr0' data-id="0" class="hidden"
+                                *ngFor="let manifestationDay of manifestation.manDaysDto">
+                                <td data-name="name">
+                                    <input type="text" disbled name='name0' class="form-control"
+                                        [value]="manifestationDay.name" />
+                                </td>
+                                <td data-name="mail">
+                                    <input type="text" disabled name='mail0' class="form-control"
+                                        [value]="manifestationDay.startTime | date: 'dd/MM/yyyy'" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
-        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4>Choose manifestation day: </h4>
+    <div class="form-check" *ngFor="let day of manifestation.manDaysDto">
+        <input class="form-check-input" type="radio" name="exampleRadios" [(ngModel)]="myRadio" id="exampleRadios1"
+            [value]="day.id" checked />
+        <label class="form-check-label" for="exampleRadios1">
+            {{day.name}}
+        </label>
+    </div>
 
-    </form>
+    <p>Choose sector:
+        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" [(ngModel)]="selectedSector"
+            name="sectorSelect">
+            <option [ngValue]="sector" *ngFor="let sector of location.sectors">{{sector.sectorName}}</option>
+        </select>
+    </p>
+    <p>Choose row:
+        <input type="number" name="row" min="1" [max]="selectedSector.rows" [(ngModel)]="my_row" />
+    </p>
+    <p>Choose column:
+        <input type="number" name="column" min="1" [max]="selectedSector.columns" [(ngModel)]="my_column" />
+    </p>
+    <hr />
 
+    <button class="btn btn-dark" (click)="reserveTicket()" style="margin-right: 50px;">Reserve ticket</button>
+    <button class="btn btn-dark" (click)="buyTicket()">Buy ticket</button>
 
 </div>

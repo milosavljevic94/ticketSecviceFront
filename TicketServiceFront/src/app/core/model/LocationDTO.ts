@@ -4,9 +4,8 @@ import {Sector} from "./Sector";
 
 export class LocationDTO {
     id : number;
-    locationName : string;
-    address : Address;
-    manifestationCategory : string;
+    locationName : string = "";
+    address : Address = new Address();
     sectors : Sector[] = [];
     manifestations : Manifestation[] = [];
     

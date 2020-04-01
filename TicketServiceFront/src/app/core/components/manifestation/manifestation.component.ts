@@ -13,6 +13,8 @@ import { SeatWithPriceDTO } from '../../model/SeatWithPriceDTO';
 import { StorageService } from '../../services/storage/storage.service';
 import { Reservation } from '../../model/Reservation';
 import { DatePipe } from '@angular/common';
+import { ManifestationInfo } from '../../model/ManifestationInfo';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 
 @Component({
@@ -30,13 +32,15 @@ export class ManifestationComponent implements OnInit {
   address: Address = new Address();
   manifestationPrices: ManifestationSectorPriceDto[] = [];
   buyTicketDTO: BuyTicketDTO = new BuyTicketDTO();
+  manifestationInfo: ManifestationInfo = new ManifestationInfo();
 
   myRadio: string;
   selectedSector: Sector = new Sector();
   my_row: number;
   my_column: number;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private storageService: StorageService, private datePipe: DatePipe, private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private storageService: StorageService, 
+    private datePipe: DatePipe, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
 
@@ -51,7 +55,12 @@ export class ManifestationComponent implements OnInit {
           this.address = data.address;
           console.log("Lokcija");
           console.log(this.location);
+          this.http.get<ManifestationInfo>('http://localhost:8080/api/manifestation/manifestationInfo/' + this.id).subscribe((data) => {
+            this.manifestationInfo = data;
+            console.log("Info");
+            console.log(this.manifestationInfo);
 
+          });
         });
       });
     });
@@ -71,10 +80,7 @@ export class ManifestationComponent implements OnInit {
 
     this.makeTicket();
 
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
     console.log(this.buyTicketDTO);
     
     this.http.post<Ticket>('http://localhost:8080/api/ticket/buyTicket', this.buyTicketDTO, { headers: headers }).subscribe((data) => {
@@ -87,10 +93,7 @@ export class ManifestationComponent implements OnInit {
 
     this.makeTicket();
 
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.put<Reservation>('http://localhost:8080/api/ticket/reserveTicket', this.buyTicketDTO, { headers: headers }).subscribe((data) => {
       alert("You have successfully made reservation!");
@@ -125,7 +128,15 @@ export class ManifestationComponent implements OnInit {
   }
 
 
-
+  public getPrice(idManDay :number, idSector: number) {
+    var i;
+    for(i = 0 ; i < this.manifestationInfo.sectorPrices.length ; i++) {
+      
+      if(this.manifestationInfo.sectorPrices[i].manDayId == idManDay && this.manifestationInfo.sectorPrices[i].sectorId == idSector) {
+        return this.manifestationInfo.sectorPrices[i].price;
+      }
+    }
+  }
 
 
 

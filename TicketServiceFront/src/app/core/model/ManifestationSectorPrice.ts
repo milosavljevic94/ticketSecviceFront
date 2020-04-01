@@ -1,7 +1,7 @@
 
-export class ManifestationSectorPriceDto {
+export class ManifestationSectorPrice {
     id : number;
-    manDayId : number;
+    dayId : number;
     sectorId : number;
     price : number;
     

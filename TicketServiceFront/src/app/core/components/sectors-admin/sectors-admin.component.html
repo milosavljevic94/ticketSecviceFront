@@ -1,0 +1,107 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 table-responsive">
+            <h2>{{manifestation.name}}</h2>
+            <hr/>
+            <h4>List of Manifestation Days: </h4>
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Name
+                        </th>
+                        <th class="text-center">
+                            Description
+                        </th>
+                        <th class="text-center">
+                            Start time
+                        </th>
+                        <th class="text-center">
+                            Manifestation
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id='addr0' data-id="0" class="hidden" *ngFor="let manifestationDay of manifestation.manDaysDto">
+                        <td data-name="name">
+                            <input type="text" name='name0' class="form-control" [(ngModel)]="manifestationDay.name" />
+                        </td>
+                        <td data-name="mail">
+                            <input type="text" name='mail0' class="form-control"
+                                [(ngModel)]="manifestationDay.description" />
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input matInput disabled [matDatepicker]="startPicker" [(ngModel)]="manifestationDay.startTime">
+                                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #startPicker></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td data-name="desc">
+                            <input disabled type="text" name="desc0" class="form-control" value="{{manifestation.name}}" />
+                        </td>
+                        <td data-name="del">
+                            <button name="del0" class='btn btn-warning glyphicon glyphicon-remove row-remove'><span
+                                    aria-hidden="true" (click)="updateManifestationDay(manifestationDay)" style="color: white;">Update</span></button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+
+
+            <h4>Prices of sector for manifestation days: </h4>
+            <hr />
+
+            <div *ngFor="let manifestationDay of manifestation.manDaysDto">
+                
+                <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                Manifestation day name
+                            </th>
+                            <th class="text-center">
+                                Sector name
+                            </th>
+                            <th class="text-center">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id='addr0' data-id="0" class="hidden" *ngFor="let sector of location.sectors">
+                            <td data-name="name">
+                                <input type="text" disabled name='name0' class="form-control"
+                                    [(ngModel)]="manifestationDay.name" />
+                            </td>
+                            <td data-name="mail">
+                                <input type="text" disabled name='mail0' class="form-control"
+                                    [(ngModel)]="sector.sectorName" />
+                            </td>
+                            <td data-name="desc">
+                                <input type="number" id="{{manifestationDay.id}}price{{sector.id}}" name="desc0" class="form-control"
+                                    [value]="getPrice(manifestationDay.id,sector.id)" />
+                            </td>
+                            <td data-name="del">
+                                <button name="del0" class='btn btn-warning glyphicon glyphicon-remove row-remove'><span
+                                        aria-hidden="true" (click)="updateSectorPrice(manifestationDay.id,sector.id)" style="color: white;">Update</span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+               </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

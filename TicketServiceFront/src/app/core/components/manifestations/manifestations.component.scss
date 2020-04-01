@@ -30,11 +30,11 @@ body {
         position: absolute;
         right: -10px;
         top: -20px;
-        background: #ff4444;
+        background: #f2d900;
         border-radius: 50%;
         text-align: center;
-        color: #fff;      
-        font-size: 14px;      
+        color: #000;      
+        font-size: 11px;      
         width: 150px;
         height: 50px;    
         padding: 15px 0 0 0;
@@ -82,4 +82,18 @@ body {
 #ads .ad-title h5 {
         text-transform: uppercase;
         font-size: 18px;
-    }
+}
+
+.moreLink {
+    color: black;
+}
+
+.dropdown-item {
+    background-color: rgba(46,61,73,0.5);
+    color: white;
+    cursor: pointer;
+}
+#dropdownMenuButton {
+    background-color: black;
+    color: white;
+}

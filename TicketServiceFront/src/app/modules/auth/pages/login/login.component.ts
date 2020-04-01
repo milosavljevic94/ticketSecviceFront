@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
           this.storageService.saveToken(data.token);
           
           this.storageService.setLocalObject("currentUser", data);
-          this.router.navigate(["/manifestations"]);
+          
           
           if(data.authorities[0].authority == "ROLE_ADMIN") {
 
@@ -75,6 +75,7 @@ export class LoginComponent implements OnInit {
             (<HTMLElement>document.getElementById("login")).hidden = true;
             (<HTMLElement>document.getElementById("register")).hidden = true;
             (<HTMLElement>document.getElementById("logout")).hidden = false;
+            this.router.navigate(["/admin/users"]);
               
           } else {
             (<HTMLElement>document.getElementById("manifestationsUser")).hidden = false;
@@ -92,7 +93,7 @@ export class LoginComponent implements OnInit {
             (<HTMLElement>document.getElementById("login")).hidden = true;
             (<HTMLElement>document.getElementById("register")).hidden = true;
             (<HTMLElement>document.getElementById("logout")).hidden = false;
-            
+            this.router.navigate(["/manifestations"]);
           }
           
           

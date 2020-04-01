@@ -1,5 +1,5 @@
 body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background: -webkit-linear-gradient(left, black, gray);
 }
 .emp-profile{
     padding: 3%;
@@ -35,7 +35,7 @@ body{
     color: #333;
 }
 .profile-head h6{
-    color: #0062cc;
+    color: black;
 }
 .profile-edit-btn{
     border: none;
@@ -62,10 +62,11 @@ body{
 .profile-head .nav-tabs .nav-link{
     font-weight:600;
     border: none;
+    color: black;
 }
 .profile-head .nav-tabs .nav-link.active{
     border: none;
-    border-bottom:2px solid #0062cc;
+    border-bottom:2px solid black;
 }
 .profile-work{
     padding: 14%;
@@ -91,11 +92,14 @@ body{
 }
 .profile-tab p{
     font-weight: 600;
-    color: #0062cc;
+    color: black;
 }
 
 .vl {
   border-left: 6px solid white;
-  height: 100px;
+  width: 100px;
 }
 
+.descriptionManifestation {
+    color: black;
+}

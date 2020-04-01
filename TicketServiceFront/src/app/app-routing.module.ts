@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from "./modules/auth/pages/login/login.component";
 import { RegisterComponent } from "./modules/auth/pages/register/register.component";
-import { ShellComponent } from "./modules/home/shell/shell.component";
 import {AddressComponent} from "./core/components/address/address.component";
 import {ManifestationsComponent} from "./core/components/manifestations/manifestations.component";
 import {ManifestationComponent} from "./core/components/manifestation/manifestation.component";
@@ -17,6 +16,7 @@ import {ReservationsAdminComponent} from "./core/components/reservations-admin/r
 import {TicketsAdminComponent} from "./core/components/tickets-admin/tickets-admin.component";
 import {ManifestationsAdminComponent} from "./core/components/manifestations-admin/manifestations-admin.component";
 import {TicketReportsComponent} from "./core/components/ticket-reports/ticket-reports.component";
+import {SectorsAdminComponent} from "./core/components/sectors-admin/sectors-admin.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: "admin/locations", component: LocationsAdminComponent },
   { path: "admin/tickets", component: TicketsAdminComponent },
   { path: "admin/manifestations", component: ManifestationsAdminComponent },
+  { path: "admin/manifestations/:id/sectors", component: SectorsAdminComponent },
   { path: "register", component: RegisterComponent },
   { path: "admin/update/location/:id", component: LocationUpdateAdminComponent},
   { path: "admin/reservations", component: ReservationsAdminComponent},

@@ -43,25 +43,23 @@
 						    <input type="text" id="city{{address.id}}" name='mail0' class="form-control"  value="{{address.city}}"/>
 						</td>
 						<td data-name="desc">
-						    <textarea name="desc0" id="street{{address.id}}" class="form-control" value="{{address.street}}"></textarea>
+						    <input type="text" name="desc0" id="street{{address.id}}" class="form-control" value="{{address.street}}"/>
                         </td>
                         <td data-name="desc">
-						    <textarea name="desc0" id="number{{address.id}}" class="form-control" value="{{address.number}}"></textarea>
+						    <input type="text" name="desc0" id="number{{address.id}}" class="form-control" value="{{address.number}}">
                         </td>
                         <td data-name="desc">
-						    <input type="number" name="desc0" id="longitude{{address.id}}" class="form-control" value="{{address.longitude}}"/>
+						    <input type="number" min="-180" max="180" name="desc0" id="longitude{{address.id}}" class="form-control" value="{{address.longitude}}"/>
                         </td>
                         <td data-name="desc">
-						    <input type="number" name="desc0" id="latitude{{address.id}}" class="form-control" value="{{address.latitude}}"/>
+						    <input type="number" min="-90" max="90" name="desc0" id="latitude{{address.id}}" class="form-control" value="{{address.latitude}}"/>
                         </td>
-
+						<td data-name="del">
+                            <button class='btn btn-warning glyphicon glyphicon-remove row-remove' style="color: white;"><span aria-hidden="true" (click)="update(address.id)">Update</span></button>
+                        </td>
                         <td data-name="del">
-                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="delete(address.id)">Delete</span></button>
+                            <button class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="delete(address.id)">Delete</span></button>
                         </td>
-                        <td data-name="del">
-                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true" (click)="update(address.id)">Update</span></button>
-                        </td>
-                        
 					</tr>
 				</tbody>
 			</table>
@@ -101,20 +99,20 @@
 						    <input type="text" name='mail0' class="form-control"  [(ngModel)]="addressCreate.city" placeholder="City"/>
 						</td>
 						<td data-name="desc">
-						    <textarea name="desc0" class="form-control" [(ngModel)]="addressCreate.street" placeholder="Street"></textarea>
+						    <input type="text" name="desc0" class="form-control" [(ngModel)]="addressCreate.street" placeholder="Street"/>
                         </td>
                         <td data-name="desc">
-						    <textarea name="desc0" class="form-control" [(ngModel)]="addressCreate.number" placeholder="Number"></textarea>
+						    <input type="text" name="desc0" class="form-control" [(ngModel)]="addressCreate.number" placeholder="Number"/>
                         </td>
                         <td data-name="desc">
-						    <input type="number" name="desc0" class="form-control" [(ngModel)]="addressCreate.longitude" placeholder="Longitude"/>
+						    <input type="number" name="desc0" min="-180" max="180" class="form-control" [(ngModel)]="addressCreate.longitude" placeholder="Longitude"/>
                         </td>
                         <td data-name="desc">
-						    <input type="number" name="desc0" class="form-control" [(ngModel)]="addressCreate.latitude" placeholder="Latitude"/>
+						    <input type="number" name="desc0" min="-90" max="90" class="form-control" [(ngModel)]="addressCreate.latitude" placeholder="Latitude"/>
                         </td>
 
                         <td data-name="del">
-                            <a id="add_row" class="btn btn-primary float-right" (click)="create()">Add Row</a>
+                            <a id="add_row" class="btn btn-success float-right" style="color: white;" (click)="create()">Create</a>
                         </td>
                         
                     </tr>

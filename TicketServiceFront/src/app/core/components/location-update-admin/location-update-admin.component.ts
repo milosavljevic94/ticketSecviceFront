@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Sector } from '../../model/Sector';
 import { Address } from '../../model/Address';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-location-update-admin',
@@ -18,21 +19,19 @@ export class LocationUpdateAdminComponent implements OnInit {
   id: number;
   private sub: any;
   addresses: Address[] = [];
-  addressCreate: Address = new Address();
+  
 
-  constructor(private http: HttpClient, private storageService: StorageService,private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private storageService: StorageService,private route: ActivatedRoute, private authService: AuthService) { }
 
 
   ngOnInit() {
     this.loadLocation();
   }
 
+
   public loadLocation() {
         
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.sub = this.route.params.subscribe(params => {
       this.id = + params['id'];
@@ -41,72 +40,59 @@ export class LocationUpdateAdminComponent implements OnInit {
         this.http.get<Address[]>('http://localhost:8080/api/address/allAddress', { headers: headers }).subscribe((data) => {
         this.addresses = data;
         console.log(data);
-
       });
       });
     });
   }
 
+
   public delete(id: number) {
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     this.http.delete('http://localhost:8080/api/sector/' + id, { headers: headers }).subscribe((data) => {
-      alert("Location deleted!");
       this.loadLocation();
-    },
-      error => {
-        alert("Location deleted!");
-        this.loadLocation();
-      });
+    });
   }
+
 
   public create(id: number) {
 
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
     this.sectorCreate.locationId = this.id;
     this.sectorCreate.seatsNumber = this.sectorCreate.rows + this.sectorCreate.columns;
     
+    if(!this.validateSector(this.sectorCreate)){
+      return;
+    }
+
+    let headers = this.authService.getHeaders();
+        
     this.http.post('http://localhost:8080/api/sector/addSector', this.sectorCreate, { headers: headers }).subscribe((data) => {
-      alert("Sector added!");
       this.sectorCreate = new Sector();
       this.loadLocation();
-    },
-      error => {
-        alert("Sector added!");
-        this.sectorCreate = new Sector();
-        this.loadLocation();
-      });
+    });
   }
 
+
   public updateLocation(){
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
-    
+
+    if(!this.validateLocation(this.location)){
+      this.loadLocation();
+      return;
+    }
+
+    let headers = this.authService.getHeaders();
+
     this.http.put('http://localhost:8080/api/location/updateLocation', this.location, { headers: headers }).subscribe((data) => {
       alert("Location updated!");
       this.loadLocation();
     },
       error => {
-        alert("Location updated!");
         this.loadLocation();
       });
   }
 
   public updateSector(idSector : number){
-    console.log(idSector);
-    console.log(this.location.sectors);
-    let headers = new HttpHeaders();
-    let token = "Bearer ";
-    token += this.storageService.getToken();
-    headers = headers.set('Authorization', token);
+    let headers = this.authService.getHeaders();
 
     let sector = new Sector();
     let i;
@@ -119,23 +105,47 @@ export class LocationUpdateAdminComponent implements OnInit {
 
     sector.seatsNumber = sector.rows*sector.columns;
 
+    if(!this.validateSector(sector)){
+      this.loadLocation();
+      return;
+    }
+
     this.http.put('http://localhost:8080/api/sector/updateSector', sector, { headers: headers }).subscribe((data) => {
       alert("Sector updated!");
       this.loadLocation();
     },
       error => {
-        alert("sector updated!");
         this.loadLocation();
       });
   }
 
+  
   public refresh(id : number) {
     var i;
     for(i = 0 ; i < this.addresses.length ; i++) {
       if(this.addresses[i].id == id) {
-        this.addressCreate = this.addresses[i];
+        this.location.address = this.addresses[i];
       }
     }
+  }
+
+
+  public validateSector(sector: Sector){
+    if(sector.sectorName === "" || sector.rows == null || sector.columns == null){
+      alert('Please fill in all fields!');
+      return false;
+    }
+
+    return true;
+  }
+
+  public validateLocation(location: LocationDTO){
+    if(location.locationName === ""){
+      alert('Please fill in all fields!');
+      return false;
+    }
+
+    return true;
   }
 
 }

@@ -8,39 +8,41 @@
     <br>
     <h4>List of available manifestations: </h4>
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Select location
+        Filter by location: <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{selectedLocation.locationName}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item"(click)="refresh(0)">--None--</a>
-          <a class="dropdown-item" *ngFor="let loc of locations" (click)="refresh(loc.id)">{{loc.locationName}}</a>
-          
-        </div>
-      </div>
-	<br>
-	<div class="row" id="ads">
-    <!-- Category Card -->
-    <div class="col-md-4" *ngFor="let man of filteredManifestations">
-        <div class="card rounded">
-            <div class="card-image">
-                <span class="card-notify-year">
-                    <p>{{man.startTime}} - {{man.endTime}}</p>
-                </span>
-                <img class="img-fluid" src="https://imageonthefly.autodatadirect.com/images/?USER=eDealer&PW=edealer872&IMG=USC80HOC011A021001.jpg&width=440&height=262" alt="Alternate Text" />
-            </div>
-            <div class="card-image-overlay m-auto">
-                <span class="card-detail-badge">{{man.manifestationCategory}}</span>
-                <span class="card-detail-badge">$28,000.00</span>
-                
-            </div>
-            
-            <div class="card-body text-center">
-                <h5>{{man.name}}</h5>
-                <button><a [routerLink]="['/manifestation', man.id]">Click for more</a></button>
-            </div>
+            <a class="dropdown-item" (click)="refresh(0)">None</a>
+            <a class="dropdown-item" *ngFor="let loc of locations" (click)="refresh(loc.id)">{{loc.locationName}}</a>
         </div>
     </div>
-    
+    <br>
+    <div class="row" id="ads" *ngIf="filteredManifestations.length > 0">
+        <!-- Category Card -->
+        <div class="col-md-4" *ngFor="let man of filteredManifestations">
+            <div class="card rounded">
+                <div class="card-image">
+                    <span class="card-notify-year">
+                        <b>{{man.startTime | date: 'dd/MM/yyyy'}} - {{man.endTime | date: 'dd/MM/yyyy'}}</b>
+                    </span>
+                    <img class="img-fluid" src="assets/resources/manifestation.jpg" alt="Alternate Text" />
+                </div>
+                <div class="card-image-overlay m-auto">
+                    <span class="card-detail-badge">{{man.manifestationCategory}}</span>
+                </div>
 
-</div>
+                <div class="card-body text-center">
+                    <h5>{{man.name}}</h5>
+                    <span class="card-detail-badge"><a class="moreLink" [routerLink]="['/manifestation', man.id]">Click
+                            for more</a></span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div *ngIf="filteredManifestations.length==0">
+        <h2>No results found!</h2>
+    </div>
 </div>

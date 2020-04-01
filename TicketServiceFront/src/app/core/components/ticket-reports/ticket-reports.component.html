@@ -5,41 +5,52 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
+<h4 style="margin-left: 80px; margin-top: 20px; padding-bottom: 30px;">{{headTitle}} </h4>
 <div class="container">
-    <div class="row clearfix">
-    	<div class="col-md-12 table-responsive">
-			<h4>{{headTitle}} </h4>
-			<table class="table table-bordered table-hover table-sortable" id="tab_logic">
+	<div class="row clearfix">
+		<div class="col-md-12 table-responsive">
+			
+			<table *ngIf="type == 'locationDay' || type == 'locationMonth' || type == 'locationYear'" class="table table-bordered table-hover table-sortable" id="tab_logic">
 				<thead>
-					<tr >
-						<th class="text-center">
-							Profit
+					<tr>
+						<th>
+							Date
 						</th>
-						<th class="text-center">
-							Number of sold tickets
-                        </th>
-                        <th>
-                            Export to pdf
-                        </th>
+						<th>
+							View report
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-    				<tr id='addr0' data-id="0" class="hidden">
-						<td data-name="name">
-						    <input type="text" name='name0' class="form-control" value="{{report.profit}}"/>
+					<tr id='addr0' data-id="0" class="hidden">
+						<td>
+							<mat-form-field>
+								<mat-label>Choose a date</mat-label>
+								<input matInput [matDatepicker]="secondPicker" [(ngModel)]="chosenDate">
+								<mat-datepicker-toggle matSuffix [for]="secondPicker"></mat-datepicker-toggle>
+								<mat-datepicker #secondPicker></mat-datepicker>
+							</mat-form-field>
 						</td>
-						<td data-name="mail">
-						    <input type="text"  name='mail0' class="form-control"  value="{{report.soldTicketNumber}}"/>
+						<td>
+							<button name="del0" class='btn btn-dark glyphicon glyphicon-remove row-remove'
+								(click)="showReport()"><span aria-hidden="true">Click for report</span></button>
 						</td>
-                        <td data-name="del">
-                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true">Export</span></button>
-                        </td>
 					</tr>
 				</tbody>
 			</table>
-			
-			
+
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					Profit
+					<span class="badge badge-success badge-pill">{{report.profit}}</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					Number of sold tickets:
+					<span class="badge badge-success badge-pill">{{report.soldTicketNumber}}</span>
+				</li>
+			</ul>
 		</div>
+		
 	</div>
-	
+
 </div>

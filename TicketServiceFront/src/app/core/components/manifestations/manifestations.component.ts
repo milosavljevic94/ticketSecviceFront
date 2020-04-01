@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Manifestation} from '../../model/Manifestation'
-import {LocationDTO} from '../../model/LocationDTO'
+import { Manifestation } from '../../model/Manifestation'
+import { LocationDTO } from '../../model/LocationDTO'
 import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-manifestations',
@@ -10,11 +11,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ManifestationsComponent implements OnInit {
 
-  manifestations : Manifestation[] = [];
-  filteredManifestations : Manifestation[] = [];
-  locations : LocationDTO[] = [];
+  manifestations: Manifestation[] = [];
+  filteredManifestations: Manifestation[] = [];
+  locations: LocationDTO[] = [];
+  selectedLocation: LocationDTO = new LocationDTO();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.reload();
@@ -26,20 +28,35 @@ export class ManifestationsComponent implements OnInit {
       this.filteredManifestations = data;
       console.log(data);
       this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation').subscribe((data) => {
-      this.locations = data;
-      console.log(data);
-    });
+        this.locations = data;
+        console.log(data);
+      });
     });
   }
 
-  public refresh(id : number) {
+  public refresh(id: number) {
     var i;
     this.filteredManifestations = [];
-    for(i = 0 ; i < this.manifestations.length ; i++) {
-      if(this.manifestations[i].locationId == id || id == 0) {
+    for (i = 0; i < this.manifestations.length; i++) {
+      if (this.manifestations[i].locationId == id || id == 0) {
         this.filteredManifestations.push(this.manifestations[i]);
       }
-    }    
+    }
+
+    if(id == 0) {
+      this.selectedLocation = new LocationDTO();
+      this.selectedLocation.locationName == "No filter";
+    } else {
+      var j;
+      for (j = 0; j < this.locations.length; j++) {
+        if (this.locations[j].id == id) {
+          console.log(this.locations[j]);
+          this.selectedLocation = this.locations[j];
+        }
+      }
+    }
+    
+    
   }
 
 }

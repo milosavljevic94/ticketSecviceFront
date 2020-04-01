@@ -1,7 +1,3 @@
-.table-sortable tbody tr {
-    cursor: move;
-}
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
@@ -86,4 +82,14 @@ body {
 #ads .ad-title h5 {
         text-transform: uppercase;
         font-size: 18px;
+    }
+
+    .dropdown-item {
+        background-color: rgba(46,61,73,0.5);
+        color: white;
+        cursor: pointer;
+    }
+    #dropdownMenuButton {
+        background-color: black;
+        color: white;
     }

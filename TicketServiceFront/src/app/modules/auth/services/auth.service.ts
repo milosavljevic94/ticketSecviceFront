@@ -1,19 +1,22 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { User } from "../../_models/user";
+import { StorageService } from "../../../core/services/storage/storage.service";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storageService : StorageService, private router: Router) {
   
   }
 
   register(user){
+    console.log(user);
     return <any> this.http.post("http://localhost:8080/register", user);
   }
 
@@ -37,5 +40,31 @@ export class AuthService {
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem("currentUser");
+    this.storageService.removeToken();
+    (<HTMLElement>document.getElementById("manifestationsUser")).hidden = true;
+    (<HTMLElement>document.getElementById("ticketsUser")).hidden = true;
+    (<HTMLElement>document.getElementById("reservationsUser")).hidden = true;
+
+    (<HTMLElement>document.getElementById("addressAdmin")).hidden = true;
+    (<HTMLElement>document.getElementById("locationsAdmin")).hidden = true;
+    (<HTMLElement>document.getElementById("manifestationsAdmin")).hidden = true;
+    (<HTMLElement>document.getElementById("reservationsAdmin")).hidden = true;
+    (<HTMLElement>document.getElementById("rolesAdmin")).hidden = true;
+    (<HTMLElement>document.getElementById("ticketsAdmin")).hidden = true;
+    (<HTMLElement>document.getElementById("usersAdmin")).hidden = true;
+
+    (<HTMLElement>document.getElementById("login")).hidden = false;
+    (<HTMLElement>document.getElementById("register")).hidden = false;
+    (<HTMLElement>document.getElementById("logout")).hidden = true;
+ 
+    this.router.navigate(["/"]);
+  }
+
+  public getHeaders() : HttpHeaders{
+    let headers = new HttpHeaders();
+    let token = "Bearer ";
+    token += this.storageService.getToken();
+    headers = headers.set('Authorization', token);
+    return headers;
   }
 }
