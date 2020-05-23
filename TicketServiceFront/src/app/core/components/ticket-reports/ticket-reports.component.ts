@@ -64,28 +64,26 @@ export class TicketReportsComponent implements OnInit {
     if (this.type == "locationDay") {
 
       formatedDate = this.datePipe.transform(this.chosenDate, 'yyyy-MM-dd');
-      console.log(formatedDate);
       this.http.post<TicketReport>('http://localhost:8080/api/ticket/reportDayLocation/' + this.id, formatedDate, { headers: headers }).subscribe((data) => {
       this.report = data;
       });
-
+      
     } else if (this.type == "locationMonth") {
 
       formatedDate = this.datePipe.transform(this.chosenDate, 'yyyy-MM');
-      console.log(formatedDate);
       this.http.post<TicketReport>('http://localhost:8080/api/ticket/reportMonthLocation/' + this.id, formatedDate, { headers: headers }).subscribe((data) => {
         this.report = data;
       });
-
+      
     } else if (this.type == "locationYear") {
 
       formatedDate = this.datePipe.transform(this.chosenDate, 'yyyy');
-      console.log(formatedDate);
       this.http.post<TicketReport>('http://localhost:8080/api/ticket/reportYearLocation/' + this.id, formatedDate, { headers: headers }).subscribe((data) => {
         this.report = data;
       });
-
+      
     } 
+    
   }
 
 

@@ -17,7 +17,7 @@ export class AuthService {
 
   register(user){
     console.log(user);
-    return <any> this.http.post("http://localhost:8080/register", user);
+    return this.http.post<any>("http://localhost:8080/user/register", user);
   }
 
 

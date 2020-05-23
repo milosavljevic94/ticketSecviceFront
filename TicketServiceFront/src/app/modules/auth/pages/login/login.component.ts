@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.loginForm.invalid) {
       return;
     }
@@ -98,7 +97,7 @@ export class LoginComponent implements OnInit {
           
           
           alert("Login successful!");
-          console.log(data);
+          console.log("Data u loginu : ",data);
         },
         error => {
           alert("Login failed. Try again!");
