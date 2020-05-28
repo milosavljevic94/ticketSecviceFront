@@ -5,7 +5,7 @@
 
 <div class="content_box">
     <div class="left_bar">
-        <ul class=" nav-tabs--vertical nav" role="navigation">
+        <ul id = "resList"class=" nav-tabs--vertical nav" role="navigation">
             <li class="nav-item" *ngFor="let reservation of userReservations">
                 <a href="#lorem" class="nav-link active" data-toggle="tab" role="tab"
                     (click)="selectionChanged(reservation.id)" aria-controls="lorem">Reservation {{reservation.id}}</a>
@@ -17,7 +17,7 @@
         <div class="tab-content ">
             <div class="tab-pane fade show active" id="lorem" role="tabpanel">
 
-                <table class="table table-bordered">
+                <table id = "reservationTableDetail" class="table table-bordered">
                     <tr>
                         <th>Manifestation</th>
                         <td>{{manifestation.name}}</td>
