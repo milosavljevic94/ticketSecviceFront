@@ -42,8 +42,10 @@ import { TicketsAdminComponent } from './components/tickets-admin/tickets-admin.
 import { ManifestationsAdminComponent } from './components/manifestations-admin/manifestations-admin.component';
 import { TicketReportsComponent } from './components/ticket-reports/ticket-reports.component';
 import { SectorsAdminComponent } from './components/sectors-admin/sectors-admin.component';
+import { ManifestationNamePipe } from './pipes/ManifestationNamePipe';
+
 @NgModule({
-  declarations: [AddressComponent, ManifestationsComponent, ManifestationComponent, UserTicketsComponent, UserReservationsComponent, HomePageComponent, UsersAdminComponent, RolesAdminComponent, LocationsAdminComponent, LocationUpdateAdminComponent, ReservationsAdminComponent, TicketsAdminComponent, ManifestationsAdminComponent, TicketReportsComponent, SectorsAdminComponent],
+  declarations: [AddressComponent, ManifestationsComponent, ManifestationComponent, UserTicketsComponent, UserReservationsComponent, HomePageComponent, UsersAdminComponent, RolesAdminComponent, LocationsAdminComponent, LocationUpdateAdminComponent, ReservationsAdminComponent, TicketsAdminComponent, ManifestationsAdminComponent, TicketReportsComponent, SectorsAdminComponent, ManifestationNamePipe],
   imports: [
     CommonModule,
     FormsModule,

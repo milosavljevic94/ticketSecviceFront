@@ -9,7 +9,9 @@
             <li class="nav-item" *ngFor="let ticket of userTickets">
                 <a href="#lorem" class="nav-link active" data-toggle="tab" role="tab"
                     (click)="selectionChanged(ticket.ticketId)" aria-controls="lorem">Ticket {{ticket.ticketId}}
-                    ({{manifestation.name}})</a>
+                    <!-- ({{ticket.ticketId | getManNameForTicket}}) -->
+                    <!-- <p ng-bind = "manifestation.name"> </p> -->
+                </a>
             </li>
         </ul>
     </div>

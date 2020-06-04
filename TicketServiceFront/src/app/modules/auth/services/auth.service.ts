@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { User } from "../../_models/user";
 import { StorageService } from "../../../core/services/storage/storage.service";
 import { Router } from "@angular/router";
+import { Role } from 'src/app/core/model/Role';
 
 @Injectable({
   providedIn: "root"
@@ -16,8 +17,11 @@ export class AuthService {
   }
 
   register(user){
+    user.role = new Role();
+    user.role.id = 1;
+    user.role.roleName = "USER";
     console.log(user);
-    return this.http.post<any>("http://localhost:8080/user/register", user);
+    return this.http.post<any>("http://localhost:8080/api/user/register", user);
   }
 
 

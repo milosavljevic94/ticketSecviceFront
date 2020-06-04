@@ -32,6 +32,7 @@ export class UserTicketsComponent implements OnInit {
     this.initializeTickets();
   }
 
+
   public selectionChanged(id: number) {
     let headers = new HttpHeaders();
     let token = "Bearer ";

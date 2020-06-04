@@ -103,3 +103,47 @@ body{
 .descriptionManifestation {
     color: black;
 }
+
+.horizontal {
+    display: flex;
+    justify-content: space-between;
+}
+  
+.seat {
+    display: flex;
+    flex: 0 0 14.28571428571429%;
+    padding: 5px;
+    position: relative;  
+    &:nth-child(3) {
+      margin-right: 14.28571428571429%;
+    }
+    input[type=checkbox] {
+      position: absolute;
+      opacity: 0;
+    }
+    label {    
+      display: block;
+      position: relative;    
+      width: 100%;    
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1.5rem;
+      padding: 4px 0;
+      background: #F42536;
+      border-radius: 5px;
+      animation-duration: 300ms;
+      animation-fill-mode: both;
+      
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0 0 0px 2px #5C6AFF;
+      }
+      
+    }
+  }
+
+  .mySeat{
+      width: auto;
+      white-space: nowrap;
+  }

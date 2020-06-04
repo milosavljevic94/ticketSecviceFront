@@ -14,7 +14,7 @@ import { AgmCoreModule } from "@agm/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DatePipe } from '@angular/common'
-
+import { ManifestationNamePipe } from './core/pipes/ManifestationNamePipe';
 
 import { AppComponent } from "./app.component";
 
@@ -40,7 +40,7 @@ import { AppComponent } from "./app.component";
     BrowserAnimationsModule,
     AgmCoreModule.forRoot()
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, ManifestationNamePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

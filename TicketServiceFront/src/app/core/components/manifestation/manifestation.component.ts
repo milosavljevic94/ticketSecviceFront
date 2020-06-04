@@ -15,6 +15,7 @@ import { Reservation } from '../../model/Reservation';
 import { DatePipe } from '@angular/common';
 import { ManifestationInfo } from '../../model/ManifestationInfo';
 import { AuthService } from '../../../modules/auth/services/auth.service';
+import { VerifySeatDto } from '../../model/VerifySeatDto';
 
 
 @Component({
@@ -39,11 +40,17 @@ export class ManifestationComponent implements OnInit {
   my_row: number;
   my_column: number;
 
+  passed = true;
+
+  verify = true;
+  avilableSeats : VerifySeatDto;
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private storageService: StorageService, 
     private datePipe: DatePipe, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
 
+    this.avilableSeats = new VerifySeatDto();
     this.sub = this.route.params.subscribe(params => {
       this.id = + params['id'];
       this.http.get<Manifestation>('http://localhost:8080/api/manifestation/' + this.id).subscribe((data) => {
@@ -66,6 +73,18 @@ export class ManifestationComponent implements OnInit {
     });
   }
 
+  public isPassed(){
+    var manDate = new Date(this.manifestation.startTime);
+    var now  = new Date();
+
+    if(manDate < now){
+      return this.passed = true;
+    }
+    else{
+      return this.passed = false;
+    }
+  }
+
   public getSector(id: number) {
     let retVal;
 
@@ -86,7 +105,11 @@ export class ManifestationComponent implements OnInit {
     this.http.post<Ticket>('http://localhost:8080/api/ticket/buyTicket', this.buyTicketDTO, { headers: headers }).subscribe((data) => {
       alert("You have successfully bought ticket!");
       this.router.navigate(["/tickets"]);
-     });
+     }, 
+     (error) => {
+       alert(error.error.m);
+     }
+     );
   }
 
   public reserveTicket() {
@@ -98,6 +121,9 @@ export class ManifestationComponent implements OnInit {
     this.http.put<Reservation>('http://localhost:8080/api/ticket/reserveTicket', this.buyTicketDTO, { headers: headers }).subscribe((data) => {
       alert("You have successfully made reservation!");
       this.router.navigate(["/reservations"]);
+    }, 
+    (error) => {
+      alert(error.error.m);
     });
 
     
@@ -138,15 +164,27 @@ export class ManifestationComponent implements OnInit {
     }
   }
 
+  public verifySeat(){
 
+    if (this.myRadio === undefined || this.myRadio === "") {
+      alert("You must choose day!");
+      return;
+    }
 
+    let idManDay = +this.myRadio;
 
+    if (this.selectedSector.id == undefined) {
+      alert("You must choose sector!");
+      return;
+    }
 
+    let idSector = this.selectedSector.id;
 
-
+    console.log("idManDay, idSector", idManDay+" , "+idSector);
+    
+     this.http.get<VerifySeatDto>('http://localhost:8080/api/manifestation/verifySeat/' + idManDay +"/"+idSector).subscribe((data) => {
+      this.avilableSeats = data;
+      console.log(this.avilableSeats);
+    }); 
+  }
 }
-
-
-
-
-

@@ -26,6 +26,7 @@ export class ManifestationsComponent implements OnInit {
     this.http.get<Manifestation[]>('http://localhost:8080/api/manifestation/allManifestations').subscribe((data) => {
       this.manifestations = data;
       this.filteredManifestations = data;
+      this.sortData();
       console.log(data);
       this.http.get<LocationDTO[]>('http://localhost:8080/api/location/allLocation').subscribe((data) => {
         this.locations = data;
@@ -55,8 +56,23 @@ export class ManifestationsComponent implements OnInit {
         }
       }
     }
-    
-    
+    this.sortData();
   }
+
+  public sortData() {
+    console.log("pozvao sort!");
+    let sortedManifestations = [];
+    let i;
+    let j;
+    for(i = 0; i < this.filteredManifestations.length; i++){
+      for(j = 0; j < this.filteredManifestations.length; j++){
+        if(new Date(this.filteredManifestations[j].startTime).getTime() < new Date(this.filteredManifestations[i].startTime).getTime()){
+            let temp = this.filteredManifestations[i];
+            this.filteredManifestations[i] = this.filteredManifestations[j];
+            this.filteredManifestations[j] = temp;
+        }
+      }
+    }
+  } 
 
 }
