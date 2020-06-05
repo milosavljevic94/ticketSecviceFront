@@ -60,8 +60,6 @@ export class ManifestationsComponent implements OnInit {
   }
 
   public sortData() {
-    console.log("pozvao sort!");
-    let sortedManifestations = [];
     let i;
     let j;
     for(i = 0; i < this.filteredManifestations.length; i++){

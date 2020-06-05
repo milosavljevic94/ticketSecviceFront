@@ -57,6 +57,7 @@ export class UserTicketsComponent implements OnInit {
     headers = headers.set('Authorization', token);
     this.http.get<BuyTicketDTO[]>('http://localhost:8080/api/ticket/allUserTicket', { headers: headers }).subscribe((data) => {
       this.userTickets = data;
+      this.sortTickets();
       console.log(data);
       this.selectedTicket = this.userTickets[0];
       this.http.get<ManifestationDayDto>('http://localhost:8080/api/manifestation/manifestationDay/' + this.selectedTicket.dayId, { headers: headers }).subscribe((data) => {
@@ -81,6 +82,20 @@ export class UserTicketsComponent implements OnInit {
       }
     }
   }
+
+  public sortTickets() {
+    let i;
+    let j;
+    for(i = 0; i < this.userTickets.length; i++){
+      for(j = 0; j < this.userTickets.length; j++){
+        if(this.userTickets[j].ticketId > this.userTickets[i].ticketId){
+            let temp = this.userTickets[i];
+            this.userTickets[i] = this.userTickets[j];
+            this.userTickets[j] = temp;
+        }
+      }
+    }
+  } 
 
 
 }

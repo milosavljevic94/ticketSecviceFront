@@ -51,22 +51,20 @@ export class ManifestationComponent implements OnInit {
   ngOnInit() {
 
     this.avilableSeats = new VerifySeatDto();
+
     this.sub = this.route.params.subscribe(params => {
       this.id = + params['id'];
       this.http.get<Manifestation>('http://localhost:8080/api/manifestation/' + this.id).subscribe((data) => {
         this.manifestation = data;
-        console.log("manifestation");
-        console.log(this.manifestation);
+        this.sortRadioBtnDays();
+        
         this.http.get<LocationDTO>('http://localhost:8080/api/location/' + data.locationId).subscribe((data) => {
           this.location = data;
           this.address = data.address;
-          console.log("Lokcija");
-          console.log(this.location);
+          this.sortSectorsList();
+          
           this.http.get<ManifestationInfo>('http://localhost:8080/api/manifestation/manifestationInfo/' + this.id).subscribe((data) => {
             this.manifestationInfo = data;
-            console.log("Info");
-            console.log(this.manifestationInfo);
-
           });
         });
       });
@@ -107,7 +105,9 @@ export class ManifestationComponent implements OnInit {
       this.router.navigate(["/tickets"]);
      }, 
      (error) => {
-       alert(error.error.m);
+       if(error.error.m != undefined){
+        alert(error.error.m);
+       }
      }
      );
   }
@@ -121,10 +121,12 @@ export class ManifestationComponent implements OnInit {
     this.http.put<Reservation>('http://localhost:8080/api/ticket/reserveTicket', this.buyTicketDTO, { headers: headers }).subscribe((data) => {
       alert("You have successfully made reservation!");
       this.router.navigate(["/reservations"]);
-    }, 
+    } , 
     (error) => {
+      if(error.error.m != undefined){
       alert(error.error.m);
-    });
+      }
+    } );
 
     
 
@@ -187,4 +189,33 @@ export class ManifestationComponent implements OnInit {
       console.log(this.avilableSeats);
     }); 
   }
+
+  public sortRadioBtnDays() {
+    let i;
+    let j;
+    for(i = 0; i < this.manifestation.manDaysDto.length; i++){
+      for(j = 0; j < this.manifestation.manDaysDto.length; j++){
+        if(this.manifestation.manDaysDto[j].id > this.manifestation.manDaysDto[i].id){
+            let temp = this.manifestation.manDaysDto[i];
+            this.manifestation.manDaysDto[i] = this.manifestation.manDaysDto[j];
+            this.manifestation.manDaysDto[j] = temp;
+        }
+      }
+    }
+  } 
+
+  public sortSectorsList() {
+    let i;
+    let j;
+    for(i = 0; i < this.location.sectors.length; i++){
+      for(j = 0; j < this.location.sectors.length; j++){
+        if(this.location.sectors[j].id > this.location.sectors[i].id){
+            let temp = this.location.sectors[i];
+            this.location.sectors[i] = this.location.sectors[j];
+            this.location.sectors[j] = temp;
+        }
+      }
+    }
+  } 
+
 }

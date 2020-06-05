@@ -95,6 +95,7 @@ export class UserReservationsComponent implements OnInit {
     headers = headers.set('Authorization', token);
     this.http.get<Reservation[]>('http://localhost:8080/api/reservation/allUserReservation', { headers: headers }).subscribe((data) => {
       this.userReservations = data;
+      this.sortReservations();
       this.selectedReservation = this.userReservations[0];
       this.ticket = this.selectedReservation.ticket;
       this.http.get<ManifestationDayDto>('http://localhost:8080/api/manifestation/manifestationDay/' + this.selectedReservation.ticket.dayId, { headers: headers }).subscribe((data) => {
@@ -118,5 +119,19 @@ export class UserReservationsComponent implements OnInit {
       }
     }
   }
+
+  public sortReservations() {
+    let i;
+    let j;
+    for(i = 0; i < this.userReservations.length; i++){
+      for(j = 0; j < this.userReservations.length; j++){
+        if(this.userReservations[j].id > this.userReservations[i].id){
+            let temp = this.userReservations[i];
+            this.userReservations[i] = this.userReservations[j];
+            this.userReservations[j] = temp;
+        }
+      }
+    }
+  } 
 
 }

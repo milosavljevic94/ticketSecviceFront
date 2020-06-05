@@ -203,7 +203,7 @@
   </div>
 
   <div id = "buyingPanel" *ngIf="!isPassed()">
-    <h4>Choose manifestation day:</h4>
+    <h3>Choose manifestation day:</h3>
     <div class="form-check" *ngFor="let day of manifestation.manDaysDto">
       <input
         class="form-check-input"
@@ -218,9 +218,11 @@
         {{ day.name }}
       </label>
     </div>
+    
+    <br/>
 
-    <p>
-      Choose sector:
+    <div>
+      <h3>Choose sector:</h3>
       <select
         class="custom-select my-1 mr-sm-2"
         id="inlineFormCustomSelectPref"
@@ -231,10 +233,12 @@
           sector.sectorName
         }}</option>
       </select>
-    </p>
+    </div>
+
+    <br/>
 
     <p>
-    <button
+    <button title="See the results below, then choose a seat !"
       class="btn btn-dark"
       (click)="verifySeat()"
       style="margin-right: 50px;"
@@ -277,13 +281,16 @@
     <button class="btn btn-dark" (click)="buyTicket()">Buy ticket</button>
   </div>
 
-
+  <br/>
   <!-- Panel to show free and taken seats in sector.
        Try to make scroll and all seats in order when sector is larger.
   -->
-  <div class="mySeat" *ngFor = "let seatInfo of avilableSeats.takenSeats; let i = index" >
+  <div id="seatPanel" *ngIf="!isPassed()">
+    <p>If you click on the verify button below you will see an overview of the seats in the selected sector. <br/> 
+      The seats painted green are free, while the red ones are taken! <br/>(R-row number, S-seat number)</p>
+    <div class="mySeat" *ngFor = "let seatInfo of avilableSeats.takenSeats; let i = index" >
 
-      <div class="mySeat" *ngIf="i % avilableSeats.columnNum == 0" class="row">
+        <div class="mySeat" *ngIf="i % avilableSeats.columnNum == 0" class="row">
 
           <div class="mySeat" *ngFor = "let seatInfoInner of avilableSeats.takenSeats; let j = index">
 
@@ -301,6 +308,7 @@
           </div>
         </div>
 
+    </div>
   </div>
 
 
