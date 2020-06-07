@@ -45,7 +45,7 @@ export class AuthService {
     // remove user from local storage and set current user to null
     localStorage.removeItem("currentUser");
     this.storageService.removeToken();
-    (<HTMLElement>document.getElementById("manifestationsUser")).hidden = true;
+    (<HTMLElement>document.getElementById("manifestationsUser")).hidden = false;
     (<HTMLElement>document.getElementById("ticketsUser")).hidden = true;
     (<HTMLElement>document.getElementById("reservationsUser")).hidden = true;
 

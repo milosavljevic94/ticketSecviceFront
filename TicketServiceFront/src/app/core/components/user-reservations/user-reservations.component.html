@@ -3,7 +3,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="content_box">
+<div class="content_box" *ngIf = "userReservations.length > 0">
     <div class="left_bar">
         <ul id = "resList"class=" nav-tabs--vertical nav" role="navigation">
             <li class="nav-item" *ngFor="let reservation of userReservations">
@@ -64,4 +64,10 @@
 
         </div>
     </div>
+</div>
+
+<div *ngIf="userReservations.length == 0">
+        <h3>You currently have no reservations! <br/>
+        <h5>Note : You can make a reservation by selecting an event and then reserve or buy directly.</h5>
+        </h3>
 </div>

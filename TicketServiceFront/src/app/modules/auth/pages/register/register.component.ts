@@ -55,7 +55,11 @@ export class RegisterComponent implements OnInit {
           },
           error => {
               this.loading = false;
-              alert("Registration failed. Try again!");
+              if(error.error.m != undefined){
+                alert(error.error.m);
+               }else{
+                alert("Registration failed. Try again!");
+               }
           });
   }
 }
