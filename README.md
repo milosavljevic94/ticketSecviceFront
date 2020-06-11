@@ -9,4 +9,4 @@ On this repository is the frontend part of the application, the backend part is 
 
 ## Launch:
 To run locally, run in the console with the command:</br>
-ng-serve
+ng serve
